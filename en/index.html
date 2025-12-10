@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoliQuest - Political Ideology Quiz</title>
+    <meta name="description" content="Discover your political stance.">
+    <link rel="stylesheet" href="../css/style.css">
+    
+    
+</head>
+<body>
+    <!-- CONTROLES DE TOPO -->
+    <div class="top-controls">
+        <div class="lang-selector">
+            <a href="../" class="lang-btn ">PT</a>
+            <span class="divider">|</span>
+            <a href="#" class="lang-btn active">EN</a>
+        </div>
+        
+        <div class="accessibility-controls">
+            <button id="theme-toggle" aria-label="Alternar Tema">
+                <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <svg id="icon-moon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button id="decrease-font" aria-label="Diminuir Fonte">A-</button>
+            <button id="increase-font" aria-label="Aumentar Fonte">A+</button>
+        </div>
+    </div>
+
+    <div class="quiz-container">
+        <div class="quiz-card">
+            
+            <div id="intro-section">
+                <h1>Political Ideology Quiz</h1>
+                <p>Answer the questions to find your position on the 5 political axes.</p>
+                
+                <div class="info-widgets">
+                    <button class="info-btn" data-info="state">What is the State?</button>
+                    <button class="info-btn" data-info="coop">What is a Coop?</button>
+                    <button class="info-btn" data-info="company">What is a Company?</button>
+                </div>
+                
+                <br>
+                <button id="start-quiz-btn" class="primary-btn">Start Quiz</button>
+            </div>
+
+            <div id="question-container" class="hidden">
+                <div class="question-header">
+                    <p id="question-counter" style="color: var(--text-color); opacity: 0.7; font-size: 0.9rem; margin: 0;"></p>
+                    <select id="question-select" aria-label="Selecionar Questão"></select>
+                </div>
+
+                <p id="question-text" style="font-size: 1.3rem; margin: 1.5rem 0; min-height: 4rem;"></p>
+                <p id="question-example" style="font-style: italic; margin-bottom: 1.5rem; display: none;"></p>
+                
+                <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 0.5rem;">
+                    <span style="color: var(--danger-color);">Disagree</span>
+                    <input type="range" id="answer-slider" min="-10" max="10" value="0" style="width: 100%; max-width: 300px;">
+                    <span style="color: var(--success-color);">Agree</span>
+                </div>
+                <p id="slider-value" style="font-weight: normal; font-size: 1.2rem;">0</p>
+                
+                <div style="margin-top: 2rem; display: flex; justify-content: space-between;">
+                    <button id="prev-question-btn">Previous</button>
+                    <button id="next-question-btn">Next</button>
+                </div>
+            </div>
+
+            <div id="results-section" class="hidden">
+                <h2>Results</h2>
+                <p>See your positioning on the 5 axes below.</p>
+                
+                <div class="graphs-grid">
+                    <!-- 1. ECONOMIA -->
+                    <div class="graph-card-wrapper">
+                        <h2 class="graph-title">Economic Intervention</h2>
+                        <div class="graph-content">
+                            <div id="economy-point" class="floating-point"><span id="economy-point-value">50%</span></div>
+                            <div class="graph-column main-categories">
+                                <div class="pattern-laissez"><span class="text-overlay">Laissez-faire</span></div>
+                                <div class="pattern-intervention"><span class="text-overlay">Intervention</span></div>
+                            </div>
+                            <div class="scale-column"><span>0%</span><span>50%</span><span>100%</span></div>
+                            <div class="graph-column sub-categories">
+                                <div class="pattern-laissez-sub"><span class="text-label">Laissez-faire</span></div>
+                                <div class="pattern-lib-econ"><span class="text-label">Econ. Liberalism</span></div>
+                                <div class="pattern-socdem"><span class="text-label">Mixed Econ.</span></div>
+                                <div class="pattern-dirigisme"><span class="text-label">Dirigisme</span></div>
+                                <div class="pattern-planning"><span class="text-label">Planned Econ.</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. SOCIEDADE -->
+                    <div class="graph-card-wrapper">
+                        <h2 class="graph-title">Society</h2>
+                        <div class="graph-content">
+                            <div id="society-point" class="floating-point"><span id="society-point-value">50%</span></div>
+                            <div class="graph-column main-categories">
+                                <div class="pattern-liberalism"><span class="text-overlay">Liberty</span></div>
+                                <div class="pattern-conservatism"><span class="text-overlay">Authority</span></div>
+                            </div>
+                            <div class="scale-column"><span>0%</span><span>50%</span><span>100%</span></div>
+                            <div class="graph-column sub-categories">
+                                <div class="pattern-anarchic"><span class="text-label">Libertarian</span></div>
+                                <div class="pattern-liberal"><span class="text-label">Liberal</span></div>
+                                <div class="pattern-moderate"><span class="text-label">Moderate</span></div>
+                                <div class="pattern-conservative-sub"><span class="text-label">Statist</span></div>
+                                <div class="pattern-authoritarian"><span class="text-label">Authoritarian</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. EXTERNO -->
+                    <div class="graph-card-wrapper">
+                        <h2 class="graph-title">Diplomacy</h2>
+                        <div class="graph-content">
+                            <div id="foreign-point" class="floating-point"><span id="foreign-point-value">50%</span></div>
+                            <div class="graph-column main-categories">
+                                <div class="pattern-sovereignty"><span class="text-overlay">Sovereignty</span></div>
+                                <div class="pattern-globalization"><span class="text-overlay">Globalization</span></div>
+                            </div>
+                            <div class="scale-column"><span>0%</span><span>50%</span><span>100%</span></div>
+                            <div class="graph-column sub-categories">
+                                <div class="pattern-autarchy"><span class="text-label">Autarky</span></div>
+                                <div class="pattern-isolationism"><span class="text-label">Isolationism</span></div>
+                                <div class="pattern-nationalism"><span class="text-label">Nationalism</span></div>
+                                <div class="pattern-internationalism"><span class="text-label">Internationalism</span></div>
+                                <div class="pattern-world-gov"><span class="text-label">World Gov.</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. JUSTIÇA -->
+                    <div class="graph-card-wrapper">
+                        <h2 class="graph-title">Justice</h2>
+                        <div class="graph-content">
+                            <div id="rules-point" class="floating-point"><span id="rules-point-value">50%</span></div>
+                            <div class="graph-column main-categories">
+                                <div class="pattern-rehab"><span class="text-overlay">Rehabilitation</span></div>
+                                <div class="pattern-punish"><span class="text-overlay">Punishment</span></div>
+                            </div>
+                            <div class="scale-column"><span>0%</span><span>50%</span><span>100%</span></div>
+                            <div class="graph-column sub-categories">
+                                <div class="pattern-restorative"><span class="text-label">Restorative</span></div>
+                                <div class="pattern-reform"><span class="text-label">Reformist</span></div>
+                                <div class="pattern-mixed-justice"><span class="text-label">Mixed</span></div>
+                                <div class="pattern-punitivism"><span class="text-label">Punitivism</span></div>
+                                <div class="pattern-retributive"><span class="text-label">Retributive</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. INTENÇÕES -->
+                    <div class="graph-card-wrapper">
+                        <h2 class="graph-title">Intentions</h2>
+                        <div class="graph-content">
+                            <div id="hierarchy-point" class="floating-point"><span id="hierarchy-point-value">50%</span></div>
+                            <div class="graph-column main-categories">
+                                <div class="pattern-hierarchy-main"><span class="text-overlay" style="color:white; background-color: rgba(0,0,0,0.5);">Hierarchy</span></div>
+                                <div class="pattern-equality-main"><span class="text-overlay" style="color:white; background-color: rgba(0,0,0,0.5);">Equality</span></div>
+                            </div>
+                            <div class="scale-column"><span>0%</span><span>50%</span><span>100%</span></div>
+                            <div class="graph-column sub-categories">
+                                <div class="pattern-elitism"><span class="text-label">Elitism</span></div>
+                                <div class="pattern-classism"><span class="text-label">Classism</span></div>
+                                <div class="pattern-meritocracy"><span class="text-label">Meritocracy</span></div>
+                                <div class="pattern-equity"><span class="text-label">Equity</span></div>
+                                <div class="pattern-egalitarianism"><span class="text-label">Egalitarianism</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ÁREA DE RELATÓRIO (CERTIFIQUE-SE QUE ISSO ESTÁ AQUI) -->
+                <div class="report-box">
+                    <h3>Help improve this quiz!</h3>
+                    <p>Generate an anonymous report of your results and send it to us. This helps calibrate the algorithm.</p>
+                    
+                    <button id="btn-generate-report" class="info-btn" style="margin-bottom: 1rem;">Generate Report</button>
+                    
+                    <div id="report-content" class="hidden">
+                        <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">
+                            Send the report to: <strong style="user-select: all;">dta.gem018@passinbox.com</strong>
+                        </p>
+                        <textarea id="report-textarea" readonly></textarea>
+                        
+                        <div class="report-actions">
+                            <button id="btn-copy-report">Copy Text</button>
+                            <button id="btn-download-report">Download .txt</button>
+                        </div>
+                        <p id="copy-feedback" style="color: var(--success-color); font-size: 0.85rem; height: 1.2rem;"></p>
+                    </div>
+                </div>
+
+                <button id="restart-btn" style="margin-top: 2rem;">Restart</button>
+            </div>
+
+            <!-- RODAPÉ -->
+            <footer>
+                <div style="margin-bottom: 1.5rem;">
+                    <a href="index.html" class="primary-btn" style="font-size: 0.9rem; padding: 8px 16px; text-decoration: none;">Back to Home</a>
+                </div>
+                
+                <p>
+                    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+                        <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" />
+                    </a>
+                </p>
+                <p>
+                    <a href="{{FOOTER_LICENSE_URL}}" target="_blank" style="color: inherit; text-decoration: underline;">
+                        This work is licensed under a Creative Commons Attribution 4.0 International License.
+                    </a>
+                </p>
+                <p>Original content by <a href='https://github.com/Drxty' target='_blank'>Drxty</a>. Enhanced version by Gemini.</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div id="info-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="modal-title"></h3>
+            <p id="modal-text"></p>
+            <button id="modal-close-btn" style="margin-top: 1rem;">Close</button>
+        </div>
+    </div>
+
+    <script>
+        window.QUIZ_DATA = {"questions":[{"text":"Should the State directly manage essential sectors like health and education?","example":"Agree: Ensures universal access via public policy, but subjects management to state bureaucracy. Disagree: Prioritizes market efficiency or community management, but subjects access to payment.","effects":{"economy":10}},{"text":"Should the State not manage health and education directly, but instead provide vouchers (financial assistance) for citizens to access these services via private or cooperative sectors?","example":"Agree: The State ensures financial access, but management and choice shift from bureaucrats to the market/individual. Disagree: The State should manage services directly (public system) or should not fund them at all.","effects":{"economy":-6,"society":-3}},{"text":"Should commercial exchanges of goods and services occur without any regulation or price control by the government?","example":"Agree: The market adjusts freely (supply/demand). Disagree: The State intervenes to prevent abuse or ensure affordable prices.","effects":{"economy":-10}},{"text":"Would public utilities (water, electricity) be better managed by local user cooperatives than by the State or private companies?","example":"Agree: Supports direct self-management (Third Way). Disagree: Prefers State centralization or private profit logic.","effects":{"economy":-3,"hierarchy":5,"society":-5}},{"text":"Should taxation be used as a tool to redistribute wealth and fund a broad social safety net?","example":"Agree: The State acts to reduce material inequalities. Disagree: Individuals should keep the fruits of their labor, reducing the State's role.","effects":{"economy":8,"hierarchy":3}},{"text":"Should companies have total freedom to define labor contracts (wages, hours) directly with employees?","example":"Agree: Increases flexibility and job supply. Disagree: The State must impose minimum rights to protect the weaker party (worker).","effects":{"economy":-8,"hierarchy":-2}},{"text":"Should the government intervene financially to save large national industries from bankruptcy?","example":"Agree: Protects jobs and economic sovereignty. Disagree: Maintains market logic where inefficiency leads to failure.","effects":{"economy":6,"foreign":-2}},{"text":"Should currency issuance and interest rates be controlled by a Central Bank independent of government politics?","example":"Agree: Focuses on currency stability and inflation control. Disagree: The government should be able to use monetary policy to stimulate growth.","effects":{"economy":-5}},{"text":"Would society function better if organized in autonomous communities without a central State?","example":"Agree: Seeks the dissolution of state power (Anarchism). Disagree: Views the State as essential for social cohesion and order.","effects":{"society":-10}},{"text":"Should the State have the power to monitor private communications to prevent threats to national security?","example":"Agree: Prioritizes collective security and prevention. Disagree: Prioritizes individual privacy and secrecy as inviolable.","effects":{"society":8,"rules":2}},{"text":"Should the consumption of psychoactive substances be a strictly individual choice, without state prohibition?","example":"Agree: Treats use as personal freedom or a health issue. Disagree: The State must prohibit to protect public morals and health.","effects":{"society":-8}},{"text":"Should the government legislate to protect and promote moral or traditional values of local culture?","example":"Agree: The State acts as guardian of culture and tradition. Disagree: The State should be secular and neutral regarding private customs.","effects":{"society":7}},{"text":"In times of health crisis, should the State have the power to mandate treatments or movement restrictions?","example":"Agree: Collective well-being overrides individual freedom. Disagree: Bodily autonomy and movement are absolute.","effects":{"society":6}},{"text":"Should freedom of speech be unrestricted, allowing even speech that offends specific groups?","example":"Agree: Freedom of speech should have no state filters. Disagree: The State must limit speech that harms the dignity of others.","effects":{"society":-6}},{"text":"Should complex technical decisions be made by experts, reducing the influence of direct popular vote?","example":"Agree: Values technical competence (Technocracy). Disagree: Values the legitimacy of popular consensus (Democracy).","effects":{"society":4,"hierarchy":-3}},{"text":"Should national sovereignty be gradually transferred to a unified global governance?","example":"Agree: Seeks to solve global problems with global laws. Disagree: Defends that each nation must have total control over its destiny.","effects":{"foreign":10}},{"text":"Should the government impose tariffs on imported products to favor local industry?","example":"Agree: Practices economic protectionism. Disagree: Defends free trade to lower costs for the consumer.","effects":{"foreign":-7,"economy":3}},{"text":"Should national borders be open for the free movement of people and workers?","example":"Agree: Views migration as a human and economic right. Disagree: Views border control as essential for security and identity.","effects":{"foreign":10}},{"text":"Should the government exclusively prioritize the interests of its citizens, even if it harms other nations?","example":"Agree: Strict nationalism ('My country first'). Disagree: Considers humanitarian impact and international cooperation.","effects":{"foreign":-8}},{"text":"Should national culture be actively protected against foreign influences?","example":"Agree: Views external culture as a threat to identity. Disagree: Views cultural exchange as enriching or inevitable.","effects":{"foreign":-8,"hierarchy":-2}},{"text":"Is class solidarity (among workers of different countries) more important than national loyalty?","example":"Agree: Internationalist/Socialist view. Disagree: Patriotic/Nationalist view.","effects":{"foreign":8,"hierarchy":3}},{"text":"Should the penal system focus on retribution (making the criminal pay for the harm done) as the main goal?","example":"Agree: Justice is served through proportional punishment. Disagree: Justice should focus on re-education and reintegration.","effects":{"rules":10}},{"text":"Is community conflict resolution (Restorative Justice) preferable to state justice?","example":"Agree: Focuses on repairing harm and consensus. Disagree: Focuses on strict application of law and judge authority.","effects":{"rules":-7,"society":-3}},{"text":"Are the death penalty or life imprisonment necessary instruments for heinous crimes?","example":"Agree: Certain individuals must be permanently removed. Disagree: Believes in the possibility of recovery or state fallibility.","effects":{"rules":10}},{"text":"Is crime primarily a reflection of social inequalities and failures?","example":"Agree: The solution is social/economic. Disagree: Crime is an individual choice or moral failure.","effects":{"rules":-8,"hierarchy":2}},{"text":"Should police forces have expanded autonomy to use force in fighting crime?","example":"Agree: Prioritizes efficiency and public order. Disagree: Prioritizes control of abuse and human rights.","effects":{"rules":8,"society":3}},{"text":"Should alternative sentences (community service) be the rule for non-violent crimes?","example":"Agree: Avoids mass incarceration. Disagree: Prison is necessary to deter illegal behavior.","effects":{"rules":-7}},{"text":"Should business owners and corporations have the right to fund political campaigns and lobby?","example":"Agree: Economic power can participate in politics (Free Speech/Capital). Disagree: Money corrupts democracy and creates inequality of influence.","effects":{"hierarchy":-8,"society":-2}},{"text":"Even in cooperatives or horizontal organizations, is it preferable to elect a leader with centralized authority for efficiency?","example":"Agree: Values chain-of-command efficiency (Hierarchy). Disagree: Values consensus and direct democracy (Equality), even if slower.","effects":{"hierarchy":-6,"economy":2}},{"text":"Is the existence of billionaires acceptable in a society where poverty still exists?","example":"Agree: Wealth is the fruit of merit and doesn't take from others. Disagree: Extreme concentration is a systemic failure to be corrected.","effects":{"hierarchy":-9,"economy":-2}},{"text":"Should the ultimate goal of social organization be equal living conditions for all?","example":"Agree: Seeks material leveling (Equality of Outcome). Disagree: Seeks only equal rules for everyone (Equality of Opportunity).","effects":{"hierarchy":10,"economy":4}},{"text":"Is it natural and beneficial that some people lead and others follow, forming social hierarchies?","example":"Agree: Views hierarchy as natural order or competence. Disagree: Views hierarchy as oppression to be dismantled.","effects":{"hierarchy":-10,"society":2}},{"text":"Should the State apply historical reparation policies (quotas) for disadvantaged groups?","example":"Agree: Justice requires active correction of past inequalities. Disagree: The law must be blind to groups and treat only the present individual.","effects":{"hierarchy":7}},{"text":"Is private ownership of land and means of production an absolute right?","example":"Agree: Property right overrides collective interest. Disagree: Property must serve a social function or be common.","effects":{"hierarchy":-7,"economy":-5}},{"text":"Should the profits of an enterprise be divided equally among all who worked in it?","example":"Agree: Value is generated by collective work. Disagree: Those who risked capital or had the idea deserve greater reward.","effects":{"hierarchy":9,"economy":2}}],"ui":{"title":"Political Ideology Quiz","desc":"Answer the questions to find your position on the 5 political axes.","btn_start":"Start Quiz","disagree":"Disagree","agree":"Agree","btn_prev":"Previous","btn_next":"Next","btn_finish":"See Results","btn_restart":"Restart","results_title":"Results","results_desc":"See your positioning on the 5 axes below.","btn_info_state":"What is the State?","btn_info_coop":"What is a Coop?","btn_info_comp":"What is a Company?","btn_close":"Close","btn_back_home":"Back to Home","footer_license_text":"This work is licensed under a Creative Commons Attribution 4.0 International License.","footer_license_url":"http://creativecommons.org/licenses/by/4.0/","footer_credits":"Original content by <a href='https://github.com/Drxty' target='_blank'>Drxty</a>. Enhanced version by Gemini.","axis_economy":"Economic Intervention","axis_society":"Society","axis_foreign":"Diplomacy","axis_rules":"Justice","axis_hierarchy":"Intentions","report_title":"Help improve this quiz!","report_desc":"Generate an anonymous report of your results and send it to us. This helps calibrate the algorithm.","report_email_instruct":"Send the report to:","report_email":"dta.gem018@passinbox.com","btn_generate":"Generate Report","btn_copy":"Copy Text","btn_download":"Download .txt","msg_copied":"Copied successfully!"},"definitions":{"state":{"title":"What is the State?","text":"The State is a political and legal entity that exercises sovereign authority over a territory and its population, structured into institutions responsible for creating, enforcing, and overseeing laws, administering public services, and representing society domestically and internationally. It can be organized in various forms, including democratic regimes—where power derives from voting and popular participation, often featuring a separation of powers among the Executive, Legislative, and Judiciary—or authoritarian regimes, characterized by the concentration of power in a single leader or a restricted group, alongside hybrid models and variations between these extremes."},"coop":{"title":"What is a Cooperative?","text":"A cooperative is an autonomous association of persons united voluntarily to meet common economic, social, and cultural needs and aspirations through a jointly-owned and democratically-controlled enterprise. In these organizations, members may choose to elect a leader or a board to manage and represent them, or exercise their decision-making power by voting directly on specific issues affecting the cooperative."},"company":{"title":"What is a Company?","text":"A company is an organization, public or private, established to produce goods or provide services on a continuous basis. In most cases, it is founded with the primary objective of making a profit—generating revenue that exceeds costs and expenses—distributing or reinvesting this surplus according to the interests of the owners or shareholders. To achieve this, it combines human, material, technological, and financial resources, operating under specific legal and regulatory frameworks relevant to its sector and location. It can vary in size and structure, ranging from micro-enterprises to large corporations, and may adopt different models of management and organization."}}};
+    </script>
+    <script src="../js/script.js"></script>
+</body>
+</html>
